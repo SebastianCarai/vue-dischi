@@ -1,28 +1,43 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <header>
+      <img src="https://www.pngall.com/wp-content/uploads/9/Spotify-Logo.png" alt="">
+    </header>
+
+    <main>
+      <Disks />
+    </main>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Disks from "./components/Disks.vue";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    Disks,
   },
 };
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@import './style/general.scss';
+
+
+header{
+  height: 80px;
+  background-color: #2e3a46;
+  line-height: 80px;
+  img{
+    height: 70px;
+    width: auto;
+  }
+}
+
+main{
+  background-color: #1e2d3b;
+  padding: 50px 0;
+  color: white;
 }
 </style>
