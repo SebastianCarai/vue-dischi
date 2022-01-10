@@ -1,8 +1,9 @@
 <template>
     <section>
         <div class="container">
+            <GenreSelect @genreSelected="changeValue" />
             <div class="disks_container">
-                <SingleDisk v-for="(disk,index) in disksList" :key="index" :myDisk="disk" />
+                <SingleDisk v-for="(disk,index) in filterGenre()" :key="index" :myDisk="disk" />
             </div>
         </div>
     </section>
@@ -11,21 +12,37 @@
 <script>
 import axios from 'axios'
 import SingleDisk from './SingleDisk.vue'
+import GenreSelect from './GenreSelect.vue'
 
 export default {
     name: 'Disks',
     components:{
-        SingleDisk
+        SingleDisk,
+        GenreSelect
     },
     data:function(){
         return{
-            disksList: []
+            disksList: [],
+            newValue:''
+        }
+    },
+    methods:{
+        changeValue: function(userGenre){
+            this.newValue = userGenre
+        },
+        filterGenre: function(){
+            if(this.newValue.length == 0){
+                return this.disksList
+            }
+            const filteredArray = this.disksList.filter((element) => {
+                return element.genre.toLowerCase().includes(this.newValue.toLowerCase())
+            })
+            return filteredArray
         }
     },
     created: function(){
         axios.get('https://flynn.boolean.careers/exercises/api/array/music')
         .then((response) =>{
-            console.log(response.data)
             this.disksList = response.data.response
         })
     }

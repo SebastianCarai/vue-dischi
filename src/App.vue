@@ -23,11 +23,12 @@ export default {
 
 <style lang="scss">
 @import './style/general.scss';
+@import './style/variables.scss';
 
 
 header{
   height: 80px;
-  background-color: #2e3a46;
+  background-color: $primary_color;
   line-height: 80px;
   img{
     height: 70px;
