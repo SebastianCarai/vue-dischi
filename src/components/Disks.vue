@@ -1,9 +1,10 @@
 <template>
     <section>
         <div class="container">
-            <GenreSelect @genreSelected="changeValue" />
+            <GenreSelect @genreSelected="changeGenreValue" />
+            <ArtistSelect @artistSelected="changeArtistValue" />
             <div class="disks_container">
-                <SingleDisk v-for="(disk,index) in filterGenre()" :key="index" :myDisk="disk" />
+                <SingleDisk v-for="(disk,index) in filterSelection()" :key="index" :myDisk="disk" />
             </div>
         </div>
     </section>
@@ -13,29 +14,35 @@
 import axios from 'axios'
 import SingleDisk from './SingleDisk.vue'
 import GenreSelect from './GenreSelect.vue'
+import ArtistSelect from './ArtistSelect.vue'
 
 export default {
     name: 'Disks',
     components:{
         SingleDisk,
-        GenreSelect
+        GenreSelect,
+        ArtistSelect
     },
     data:function(){
         return{
             disksList: [],
-            newValue:''
+            newGenrevalue:'',
+            newArtistValue: ''
         }
     },
     methods:{
-        changeValue: function(userGenre){
-            this.newValue = userGenre
+        changeGenreValue: function(userGenre){
+            this.newGenrevalue = userGenre
         },
-        filterGenre: function(){
-            if(this.newValue.length == 0){
+        changeArtistValue: function(userArtist){
+            this.newArtistValue = userArtist  
+        },
+        filterSelection: function(){
+            if(this.newGenrevalue.length == 0 && this.newArtistValue.length == 0){
                 return this.disksList
             }
             const filteredArray = this.disksList.filter((element) => {
-                return element.genre.toLowerCase().includes(this.newValue.toLowerCase())
+                return (element.author.toLowerCase().includes(this.newArtistValue.toLowerCase()) && element.genre.toLowerCase().includes(this.newGenrevalue.toLowerCase()))
             })
             return filteredArray
         }
