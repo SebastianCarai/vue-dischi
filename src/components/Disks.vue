@@ -1,7 +1,7 @@
 <template>
     <section>
         <div class="container">
-            <GenreSelect @genreSelected="changeGenreValue" />
+            <GenreSelect :genres="genresArray" @genreSelected="changeGenreValue" />
             <ArtistSelect @artistSelected="changeArtistValue" />
             <div class="disks_container">
                 <SingleDisk v-for="(disk,index) in filterSelection()" :key="index" :myDisk="disk" />
@@ -26,6 +26,7 @@ export default {
     data:function(){
         return{
             disksList: [],
+            genresArray: [],
             newGenrevalue:'',
             newArtistValue: ''
         }
@@ -50,8 +51,14 @@ export default {
     created: function(){
         axios.get('https://flynn.boolean.careers/exercises/api/array/music')
         .then((response) =>{
-            this.disksList = response.data.response
-        })
+            this.disksList = response.data.response;
+
+            this.disksList.forEach((element) =>{
+            if (!this.genresArray.includes(element.genre)){
+                    this.genresArray.push(element.genre)
+                }
+            })
+        });
     }
 }
 </script>
